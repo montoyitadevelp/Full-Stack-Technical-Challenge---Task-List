@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TaskPriority {
+  low
+  medium
+  high
+  urgent
+}
+
+model usuario {
+  id         String      @id @default(uuid())
+  nombre     String
+  email      String      @unique
+  password   String
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  categorias categoria[]
+  etiquetas  etiqueta[]
+  tareas     tarea[]
+}
+
+model categoria {
+  id         String   @id @default(uuid())
+  usuarioId  String
+  nombre     String
+  color      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  usuario    usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  tareas     tarea[]
+  
+  @@unique([usuarioId, nombre])
+}
+
+model etiqueta {
+  id         String        @id @default(uuid())
+  usuarioId  String
+  nombre     String
+  color      String?
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  usuario    usuario       @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  tareas     tareaetiqueta[]
+
+  @@unique([usuarioId, nombre])
+}
+
+model tarea {
+  id             String         @id @default(uuid())
+  usuarioId      String
+  categoriaId    String?
+  titulo         String
+  descripcion    String?
+  prioridad      TaskPriority   @default(medium)
+  fechaVencimiento DateTime?
+  completada     Boolean        @default(false)
+  completedAt    DateTime?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  usuario        usuario        @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  categoria      categoria?     @relation(fields: [categoriaId], references: [id], onDelete: SetNull)
+  etiquetas      tareaetiqueta[]
+}
+
+model tareaetiqueta {
+  tareaId    String
+  etiquetaId String
+  createdAt  DateTime @default(now())
+
+  tarea      tarea   @relation(fields: [tareaId], references: [id], onDelete: Cascade)
+  etiqueta   etiqueta @relation(fields: [etiquetaId], references: [id], onDelete: Cascade)
+
+  @@id([tareaId, etiquetaId])
+}
