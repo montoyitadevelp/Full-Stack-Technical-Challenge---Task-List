@@ -2,8 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import helmet from 'helmet';
 import v1 from './v1/index';
-
-
+import limiter from './utils';
 
 
 export const createServer = () => {
@@ -15,6 +14,10 @@ export const createServer = () => {
         */
         .use(helmet())
         /**
+         * Rate limiting
+         */
+        .use(limiter)
+        /**
          * Configure body parser
         */
         .use(express.urlencoded({ extended: true }))
@@ -24,6 +27,6 @@ export const createServer = () => {
          */
         .use(cors())
         .use("/api/v1", v1)
-        
+
     return app;
 }

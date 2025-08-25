@@ -4,19 +4,16 @@ dotenv.config();
 
 const config = {
     app_name: process.env.APP_NAME,
-    env: process.env.NODE_ENV || "development",
-    port: process.env.PORT || 3000,
-    debug: process.env.DEBUG || false,
-    base_url: process.env.BASE_URL || "http://localhost:3000",
+    env: process.env.NODE_ENV,
+    port: process.env.PORT,
+    debug: process.env.DEBUG,
+    base_url: process.env.BASE_URL,
     db: {
-        protocol: process.env.DB_PROTOCOL || "mongodb+srv",
-        user: process.env.DB_USER || "user",
-        password: process.env.DB_PASSWORD || "password",
-        host: process.env.DB_HOST || "localhost",
-        name: process.env.DB_NAME || "test"
+        url: process.env.DATABASE_URL
     },
     jwt: {
-        secret: process.env.JWT_SECRET || "mysecretkey"
+        secret: process.env.JWT_SECRET,
+        expires: process.env.JWT_EXPIRES_IN
     }
 }
 

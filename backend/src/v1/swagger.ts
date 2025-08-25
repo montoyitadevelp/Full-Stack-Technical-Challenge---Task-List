@@ -1,4 +1,7 @@
-import { userRegisterSwagger, userLoginSwagger } from './user/user.schema';
+import { userRegisterSchema, userLoginSchema, userProfileResponseSchema } from './user/user.schema';
+import { taskCreateSchema, taskUpdateSchema, taskResponseSchema } from './task/task.schema';
+import { categoryCreateSchema, categoryUpdateSchema, categoryResponseSchema } from './category/category.schema';
+import { labelCreateSchema, labelResponseSchema } from './label/label.schema';
 import swaggerJSDoc from 'swagger-jsdoc';
 import config from '../config';
 
@@ -18,8 +21,17 @@ const swaggerDefinition = {
             },
         },
         schemas: {
-            UserRegister: userRegisterSwagger,
-            UserLogin: userLoginSwagger,
+            UserRegister: userRegisterSchema,
+            UserLogin: userLoginSchema,
+            UserResponse: userProfileResponseSchema,
+            TaskResponse: taskResponseSchema,
+            TaskCreate: taskCreateSchema,
+            TaskUpdate: taskUpdateSchema,
+            CategoryCreate: categoryCreateSchema,
+            CategoryUpdate: categoryUpdateSchema,
+            CategoryResponse: categoryResponseSchema,
+            LabelResponse: labelResponseSchema,
+            LabelCreate: labelCreateSchema
         }
     },
     servers: [
