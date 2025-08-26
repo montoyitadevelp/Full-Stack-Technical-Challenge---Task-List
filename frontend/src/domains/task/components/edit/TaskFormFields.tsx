@@ -9,22 +9,33 @@ import {
 import {
     FormItemEditableInputText,
     FormItemEditableSelect,
-    FormItemEditableText,
 } from "@/components/form";
+import { useSelect } from "@refinedev/core";
+import { PRIORITIES } from "../../constants/main";
+
+interface TaskFormFieldsProps {
+    isLoading: boolean | undefined
+}
 
 export const TaskFormFields = ({
     isLoading,
-    categoriaSelectProps,
-    etiquetasSelectProps
-}: any) => {
-    return (
-        <Card bordered={false} style={{ padding: 0 }}>
-            <FormItemEditableText
-                loading={isLoading}
-                formItemProps={{ name: "titulo", label: "Título", rules: [{ required: true }] }}
-            />
-            <Divider style={{ margin: 0 }} />
+}: TaskFormFieldsProps) => {
+    const categoriaSelectProps = useSelect({
+        resource: "categorias",
+        optionLabel: "nombre",
+        optionValue: "id",
+        pagination: { mode: "off" },
+    });
 
+    const etiquetasSelectProps = useSelect({
+        resource: "etiquetas",
+        optionLabel: "nombre",
+        optionValue: "id",
+        pagination: { mode: "off" },
+    });
+
+    return (
+        <Card bordered={false}>
             <FormItemEditableInputText
                 loading={isLoading}
                 icon={<BookOutlined />}
@@ -54,11 +65,7 @@ export const TaskFormFields = ({
                 icon={<FlagOutlined />}
                 formItemProps={{ name: "prioridad", label: "Prioridad" }}
                 selectProps={{
-                    options: [
-                        { label: "Baja", value: "low" },
-                        { label: "Media", value: "medium" },
-                        { label: "Alta", value: "high" },
-                    ]
+                    options: PRIORITIES
                 }}
             />
             <Divider style={{ margin: 0 }} />

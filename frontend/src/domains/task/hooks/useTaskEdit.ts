@@ -11,31 +11,6 @@ export const useTaskEdit = () => {
     const isLoading = queryResult?.isLoading;
 
 
-    const categoriaSelectProps = useSelect({
-        resource: "categorias",
-        optionLabel: "nombre",
-        optionValue: "id",
-        pagination: { mode: "off" },
-    });
-
-    const etiquetasSelectProps = useSelect({
-        resource: "etiquetas",
-        optionLabel: "nombre",
-        optionValue: "id",
-        pagination: { mode: "off" },
-    });
-
-
-    const initialValues = task
-        ? {
-            ...task,
-            completada: !!task.completada,
-            categoriaId: task.categoria?.id ?? null,
-            etiquetas: task.etiquetas?.map((e) => e.etiqueta.id) ?? [],
-        }
-        : {};
-
-
     const handleFinish = (values: any) => {
         const payload = {
             ...values,
@@ -54,9 +29,7 @@ export const useTaskEdit = () => {
         formProps,
         task,
         isLoading,
-        categoriaSelectProps,
-        etiquetasSelectProps,
-        initialValues,
+
         handleFinish,
         handleDeleteSuccess,
     };

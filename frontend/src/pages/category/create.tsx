@@ -1,22 +1,16 @@
-import { type HttpError, useGo } from "@refinedev/core";
-import { useForm } from "@refinedev/antd";
 import { Modal, Form, Input } from "antd";
 
-export const CategoryPageCreate = () => {
-  const go = useGo();
+import { CategoryFormFields } from "@/domains/category/components/create/CategoryFormFields";
+import { useGo } from "@refinedev/core";
+import { useFormFields } from "@/hooks/useFormFields";
 
-  const { formProps } = useForm<
-    { nombre: string; color: string }, 
-    HttpError
-  >({
-    redirect: false,
-    onMutationSuccess: () => {
-      go({
-        to: { resource: "categorias", action: "list" },
-        options: { keepQuery: true },
-      });
-    },
-  });
+export const CategoryPageCreate = () => {
+  const {
+    formProps
+  } = useFormFields({
+    resource: "categorias"
+  })
+  const go = useGo()
 
   return (
     <Modal
@@ -36,21 +30,7 @@ export const CategoryPageCreate = () => {
         {...formProps}
         onFinish={(values) => formProps.onFinish?.(values)}
       >
-        <Form.Item
-          name="nombre"
-          label="Nombre"
-          rules={[{ required: true, message: "El nombre es obligatorio" }]}
-        >
-          <Input placeholder="Nombre de la categoría" />
-        </Form.Item>
-
-        <Form.Item
-          name="color"
-          label="Color"
-          rules={[{ required: true, message: "El color es obligatorio" }]}
-        >
-          <Input type="color" style={{ width: 80, padding: 0 }} />
-        </Form.Item>
+        <CategoryFormFields />
       </Form>
     </Modal>
   );

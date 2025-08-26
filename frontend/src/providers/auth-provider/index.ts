@@ -6,7 +6,7 @@ import { axiosInstance } from "../axios";
 export const authProvider: AuthProvider = {
   login: async ({ email, password }) => {
     try {
-      const { data, status } =  await axiosInstance.post("/auth/login", { email, password });
+      const { data, status } = await axiosInstance.post("/auth/login", { email, password });
       if (status === 200) {
         localStorage.setItem(TOKEN_KEY, data.token);
 
@@ -35,15 +35,17 @@ export const authProvider: AuthProvider = {
       },
     };
   },
-  register: async ({ nombre, email, password }) => {
+  register: async ({ name, email, password }) => {
     try {
-      const { data, status } = await axiosInstance.post("/auth/registro", { nombre: "simon", email, password });
+      const { status } = await axiosInstance.post("/auth/registro", { nombre: name, email, password });
       if (status === 201) {
-        localStorage.setItem(TOKEN_KEY, data.token);
-
         return {
           success: true,
-          redirectTo: "/",
+          redirectTo: "/login",
+          successNotification: {
+            message: "Registration Successful",
+            description: "You have successfully registered. Please login.",
+          },
         };
       }
     } catch (error: any) {
