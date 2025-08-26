@@ -1,7 +1,7 @@
 import { userRegisterSchema, userLoginSchema, userProfileResponseSchema } from './user/user.schema';
 import { taskCreateSchema, taskUpdateSchema, taskResponseSchema, paginatedTaskResponseSchema } from './task/task.schema';
 import { categoryCreateSchema, categoryUpdateSchema, categoryResponseSchema } from './category/category.schema';
-import { labelCreateSchema, labelResponseSchema } from './label/label.schema';
+import { labelCreateSchema, labelResponseSchema, labelUpdateSchema } from './label/label.schema';
 import swaggerJSDoc from 'swagger-jsdoc';
 import config from '../config';
 
@@ -32,6 +32,7 @@ const swaggerDefinition = {
             CategoryUpdate: categoryUpdateSchema,
             CategoryResponse: categoryResponseSchema,
             LabelResponse: labelResponseSchema,
+            LabelUpdate: labelUpdateSchema,
             LabelCreate: labelCreateSchema
         }
     },

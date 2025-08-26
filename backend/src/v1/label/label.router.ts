@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { labelCreateValidationSchema } from "./label.schema";
+import { labelCreateValidationSchema, labelUpdateValidationSchema } from "./label.schema";
 import * as ctrl from "./label.controller";
 import validateRequest from "../middleware/schema.middleware";
 import authHandler from "../middleware/auth.middleware";
@@ -58,5 +58,28 @@ router.get("/", ctrl.listLabels);
  *         description: Validation error / Duplicate label
  */
 router.post("/", validateRequest(labelCreateValidationSchema), ctrl.createLabel);
+
+
+/**
+ * @swagger
+ * /etiquetas/{id}:
+ *   delete:
+ *     summary: Delete a label
+ *     tags: [Etiquetas]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     responses:
+ *       204:
+ *         description: Label deleted successfully
+ */
+router.delete("/:id", ctrl.deleteLabel);
+
 
 export default router

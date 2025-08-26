@@ -25,3 +25,15 @@ export async function createLabel(req: Request, res: Response, next: NextFunctio
 }
 
 
+
+export async function deleteLabel(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { id } = req.params;
+    await service.remove(req.userId!, id);
+    res.status(204).send();
+  } catch (err) {
+    next(err);
+  }
+}
+
+

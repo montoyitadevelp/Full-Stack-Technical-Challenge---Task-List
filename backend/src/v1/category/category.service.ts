@@ -4,6 +4,12 @@ import { BadRequestError, NotFoundError } from "../core/errors";
 export class CategoryService {
     private categorias = new CategoryRepository();
 
+    async getById(userId: string, id: string) {
+        const category = await this.categorias.findByIdWithRelations(id, userId);
+        if (!category) throw new NotFoundError("Category not found");
+        return category;
+    }
+
     async list(userId: string) {
         return this.categorias.findAllByUser(userId);
     }

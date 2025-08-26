@@ -3,6 +3,16 @@ import { CategoryService } from "./category.service";
 
 const service = new CategoryService();
 
+
+export async function getCategoryById(req: Request, res: Response, next: NextFunction) {
+    try {
+        const category = await service.getById(req.userId!, req.params.id);
+        res.json(category);
+    } catch (err) {
+        next(err);
+    }
+}
+
 export async function listCategory(req: Request, res: Response, next: NextFunction) {
     try {
         const categories = await service.list(req.userId!);

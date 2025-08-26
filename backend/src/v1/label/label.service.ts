@@ -1,5 +1,5 @@
 import { LabelTaskRepository } from "./label.repository";
-import { BadRequestError } from "../core/errors";
+import { BadRequestError, NotFoundError } from "../core/errors";
 
 export class LabelTaskService {
     private labels = new LabelTaskRepository();
@@ -19,6 +19,12 @@ export class LabelTaskService {
             color,
             usuarioId: userId,
         });
+    }
+
+    async remove(userId: string, id: string) {
+        const cat = await this.labels.findById(id);
+        if (!cat || cat.usuarioId !== userId) throw new NotFoundError("Label not found");
+        return this.labels.delete(id);
     }
 
 

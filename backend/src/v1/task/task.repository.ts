@@ -6,7 +6,7 @@ import { TaskDTO } from "./task.dto";
 export class TaskRepository extends Repository<tarea> {
   protected model = prisma.tarea;
 
-  async findByIdWithRelations(id: string, userId: string) {
+  findByIdWithRelations(id: string, userId: string) {
     return this.model.findFirst({
       where: { id, usuarioId: userId },
       include: {
@@ -33,7 +33,7 @@ export class TaskRepository extends Repository<tarea> {
     } = params;
 
     const where: any = { usuarioId };
-  
+
     if (completada !== undefined) where.completada = completada;
     if (categoriaId) where.categoriaId = categoriaId;
     if (prioridad) where.prioridad = prioridad;
@@ -42,12 +42,16 @@ export class TaskRepository extends Repository<tarea> {
       if (fechaInicio) where.fechaVencimiento.gte = fechaInicio;
       if (fechaFin) where.fechaVencimiento.lte = fechaFin;
     }
-    if (busqueda) {
+
+    if (busqueda?.trim()) {
+      const search = busqueda.trim();
+
       where.OR = [
-        { titulo: { contains: busqueda, mode: "insensitive" } },
-        { descripcion: { contains: busqueda, mode: "insensitive" } },
+        { titulo: { contains: search, mode: "insensitive" } },
+        { descripcion: { contains: search, mode: "insensitive" } },
       ];
     }
+
     if (etiquetasIds && etiquetasIds.length > 0) {
       where.etiquetas = { some: { etiquetaId: { in: etiquetasIds } } };
     }

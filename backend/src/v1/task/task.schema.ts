@@ -4,7 +4,7 @@ import j2s from "joi-to-swagger";
 
 export const taskCreateValidationSchema = Joi.object({
   titulo: Joi.string().min(3).max(100).required(),
-  descripcion: Joi.string().allow("").max(500),
+  descripcion: Joi.string().allow("").max(500).allow(null),
   prioridad: Joi.string().valid("low", "medium", "high").default("medium"),
   completada: Joi.boolean().default(false),
   categoriaId: Joi.string().uuid().allow(null),
@@ -14,7 +14,7 @@ export const taskCreateValidationSchema = Joi.object({
 
 export const taskUpdateValidationSchema = Joi.object({
   titulo: Joi.string().min(3).max(100),
-  descripcion: Joi.string().allow("").max(500),
+  descripcion: Joi.string().allow("").max(500).allow(null),
   prioridad: Joi.string().valid("low", "medium", "high"),
   completada: Joi.boolean(),
   categoriaId: Joi.string().uuid().allow(null),

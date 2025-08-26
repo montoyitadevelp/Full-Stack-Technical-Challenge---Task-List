@@ -1,8 +1,7 @@
 import { Router } from "express";
-import { 
-  categoryCreateValidationSchema, 
-  categoryUpdateValidationSchema, 
-  categoryResponseSchema 
+import {
+  categoryCreateValidationSchema,
+  categoryUpdateValidationSchema,
 } from "./category.schema";
 import * as ctrl from "./category.controller";
 import validateRequest from "../middleware/schema.middleware";
@@ -38,6 +37,34 @@ router.get("/", ctrl.listCategory);
 
 /**
  * @swagger
+ * /categorias/{id}:
+ *   get:
+ *     summary: Get category by ID
+ *     tags: [Categorias]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Category ID
+ *     responses:
+ *       200:
+ *         description: Category found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/CategoryResponse'
+ *       404:
+ *         description: Category not found
+ */
+router.get("/:id", ctrl.getCategoryById);
+
+
+/**
+ * @swagger
  * /categorias:
  *   post:
  *     summary: Create a category
@@ -63,7 +90,7 @@ router.post("/", validateRequest(categoryCreateValidationSchema), ctrl.createCat
 /**
  * @swagger
  * /categorias/{id}:
- *   put:
+ *   patch:
  *     summary: Update a category
  *     tags: [Categorias]
  *     security:
@@ -89,7 +116,7 @@ router.post("/", validateRequest(categoryCreateValidationSchema), ctrl.createCat
  *             schema:
  *               $ref: '#/components/schemas/CategoryResponse'
  */
-router.put("/:id", validateRequest(categoryUpdateValidationSchema), ctrl.updateCategory);
+router.patch("/:id", validateRequest(categoryUpdateValidationSchema), ctrl.updateCategory);
 
 /**
  * @swagger

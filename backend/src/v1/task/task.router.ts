@@ -63,6 +63,7 @@ router.use(authHandler);
  *         style: form
  *         explode: true
  *         description: Filter by tag IDs
+ * 
  *       - in: query
  *         name: page
  *         schema:
@@ -175,28 +176,7 @@ router.patch("/:id", validateRequest(taskUpdateValidationSchema), ctrl.updateTas
 
 /**
  * @swagger
- * /tareas/{id}:
- *   delete:
- *     summary: Delete a task
- *     tags: [Tareas]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *           format: uuid
- *     responses:
- *       204:
- *         description: Task deleted successfully
- */
-router.delete("/:id", ctrl.deleteTask);
-
-/**
- * @swagger
- * /tareas/{id}/completar:
+ * /tareas/completar/{id}:
  *   patch:
  *     summary: Toggle task completion
  *     tags: [Tareas]
@@ -217,6 +197,28 @@ router.delete("/:id", ctrl.deleteTask);
  *             schema:
  *               $ref: '#/components/schemas/TaskResponse'
  */
-router.patch("/:id/completar", ctrl.toggleTaskCompletion);
+router.patch("/completar/:id", ctrl.toggleTaskCompletion);
+
+
+/**
+ * @swagger
+ * /tareas/{id}:
+ *   delete:
+ *     summary: Delete a task
+ *     tags: [Tareas]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     responses:
+ *       204:
+ *         description: Task deleted successfully
+ */
+router.delete("/:id", ctrl.deleteTask);
 
 export default router;
