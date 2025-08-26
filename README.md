@@ -1,1 +1,0 @@
-# Full-Stack-Technical-Challenge---Task-List

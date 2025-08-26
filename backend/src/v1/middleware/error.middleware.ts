@@ -41,7 +41,7 @@ export default function errorHandler(
         const validationError = {
             error: {
                 message: "Validation error",
-                code: "ERR_VALID",
+                code: 422,
                 errors: error.details.map((item) => ({
                     message: item.message,
                 })),

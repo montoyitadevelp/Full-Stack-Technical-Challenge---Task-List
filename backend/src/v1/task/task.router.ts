@@ -21,17 +21,102 @@ router.use(authHandler);
  *     tags: [Tareas]
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: completed
+ *         schema:
+ *           type: boolean
+ *         description: Filter by completion status
+ *       - in: query
+ *         name: category
+ *         schema:
+ *           type: string
+ *         description: Filter by category ID
+ *       - in: query
+ *         name: priority
+ *         schema:
+ *           type: string
+ *         description: Filter by priority level
+ *       - in: query
+ *         name: dueDateStart
+ *         schema:
+ *           type: string
+ *           format: date
+ *         description: Start date of due date range
+ *       - in: query
+ *         name: dueDateEnd
+ *         schema:
+ *           type: string
+ *           format: date
+ *         description: End date of due date range
+ *       - in: query
+ *         name: search
+ *         schema:
+ *           type: string
+ *         description: Search in title and description
+ *       - in: query
+ *         name: tags
+ *         schema:
+ *           type: array
+ *           items:
+ *             type: string
+ *         style: form
+ *         explode: true
+ *         description: Filter by tag IDs
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           default: 1
+ *         description: Page number to retrieve
+ *       - in: query
+ *         name: pageSize
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 100
+ *           default: 10
+ *         description: Number of records per page
+ *
  *     responses:
  *       200:
- *         description: List of tasks
+ *         description: Paginated list of tasks
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/TaskResponse'
+ *               $ref: '#/components/schemas/TaskPaginated'
  */
 router.get("/", ctrl.getTasks);
+
+
+/**
+ * @swagger
+ * /tareas/{id}:
+ *   get:
+ *     summary: Get task by ID
+ *     tags: [Tareas]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Task ID
+ *     responses:
+ *       200:
+ *         description: Task found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/TaskResponse'
+ *       404:
+ *         description: Task not found
+ */
+router.get("/:id", ctrl.getTaskById);
+
 
 /**
  * @swagger
@@ -60,7 +145,7 @@ router.post("/", validateRequest(taskCreateValidationSchema), ctrl.createTask);
 /**
  * @swagger
  * /tareas/{id}:
- *   put:
+ *   patch:
  *     summary: Update a task
  *     tags: [Tareas]
  *     security:
@@ -86,7 +171,7 @@ router.post("/", validateRequest(taskCreateValidationSchema), ctrl.createTask);
  *             schema:
  *               $ref: '#/components/schemas/TaskResponse'
  */
-router.put("/:id", validateRequest(taskUpdateValidationSchema), ctrl.updateTask);
+router.patch("/:id", validateRequest(taskUpdateValidationSchema), ctrl.updateTask);
 
 /**
  * @swagger

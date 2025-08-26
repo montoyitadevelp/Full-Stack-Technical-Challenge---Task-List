@@ -3,16 +3,26 @@ import { TaskRepository } from "./task.repository";
 import { NotFoundError } from "../core/errors";
 import { CategoryRepository } from "../category/category.repository";
 import { LabelTaskRepository } from "../label/label.repository";
+import { toTaskDTO } from "./task.dto";
 
 export class TaskService {
   private tasks = new TaskRepository();
   private categories = new CategoryRepository();
   private labels = new LabelTaskRepository();
 
-  async getAll(userId: string) {
-    return this.tasks.findAllByUser(userId);
+  async getById(userId: string, id: string) {
+    const task = await this.tasks.findByIdWithRelations(id, userId);
+    if (!task) throw new NotFoundError("Task not found");
+    return task;
   }
 
+
+  async getAll(filters?: Record<string, any>) {
+    const dto = toTaskDTO(filters);
+
+    return this.tasks.findAllWithFilters(dto);
+  }
+  
   private async validateCategory(userId: string, categoriaId?: string): Promise<string | null> {
     if (!categoriaId) return null;
     const category = await this.categories.findById(categoriaId);

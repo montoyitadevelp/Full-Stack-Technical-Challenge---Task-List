@@ -1,4 +1,4 @@
-import { usuario } from "@prisma/client";
+
 
 export type UserDTO = {
   id: string;
@@ -8,12 +8,12 @@ export type UserDTO = {
   updatedAt: Date;
 };
 
-export function toUserDTO(u: Record<string, any>): UserDTO {
+export function toUserDTO(user: Record<string, any>): UserDTO {
   return {
-    id: u.id,
-    nombre: u.nombre,
-    email: u.email,
-    createdAt: u.createdAt,
-    updatedAt: u.updatedAt,
+    id: user.id,
+    nombre: user.nombre,
+    email: user.email,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt,
   };
 }

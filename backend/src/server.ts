@@ -16,7 +16,7 @@ export const createServer = () => {
         /**
          * Rate limiting
          */
-        .use(limiter)
+        //.use(limiter)
         /**
          * Configure body parser
         */

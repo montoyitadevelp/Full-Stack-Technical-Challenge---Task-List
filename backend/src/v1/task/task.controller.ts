@@ -3,10 +3,21 @@ import { TaskService } from "./task.service";
 
 const service = new TaskService();
 
+export async function getTaskById(req: Request, res: Response, next: NextFunction) {
+    try {
+        const userId = req.userId!;
+        const { id } = req.params;
+        const task = await service.getById(userId, id);
+        res.json(task);
+    } catch (err) {
+        next(err);
+    }
+}
+
 export async function getTasks(req: Request, res: Response, next: NextFunction) {
     try {
         const userId = req.userId!;
-        const tasks = await service.getAll(userId);
+        const tasks = await service.getAll({ ...req.query, usuarioId: userId });
         res.json(tasks);
     } catch (err) { next(err); }
 }

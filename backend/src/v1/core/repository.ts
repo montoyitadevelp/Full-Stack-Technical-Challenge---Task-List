@@ -5,10 +5,10 @@ export abstract class Repository<T> {
   protected prisma = prisma;
   protected abstract model: any;
 
+
   async findAll(): Promise<T[]> {
     return this.model.findMany();
   }
-  
 
   async findById(id: string): Promise<T | null> {
     return this.model.findUnique({ where: { id } });
