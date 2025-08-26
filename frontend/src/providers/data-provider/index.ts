@@ -10,36 +10,78 @@ export const customDataProvider: DataProvider = {
     getList: async ({ resource, pagination, filters, sorters }: any) => {
         const params: Record<string, any> = {};
 
-        if (pagination) {
+
+        if (pagination && pagination.mode !== "off") {
             params.page = pagination.current;
-            params.limit = pagination.pageSize;
+            params.pageSize = pagination.pageSize;
         }
 
 
         filters?.forEach((filter: any) => {
-            if (filter.field === "etiquetas" && Array.isArray(filter.value)) {
+            if (filter.value === undefined || filter.value === null || filter.value === "") return;
 
-                params.etiquetas = filter.value;
-            } else {
-                params[filter.field] = filter.value;
+            switch (filter.field) {
+                case "completada":
+                    params.completed = filter.value;
+                    break;
+                case "categoriaId":
+                    params.category = filter.value;
+                    break;
+                case "prioridad":
+                    params.priority = filter.value;
+                    break;
+                case "etiquetas":
+                    if (Array.isArray(filter.value)) {
+                        filter.value.forEach((t: any) => {
+                            const tagId = typeof t === "object" ? t.id || t.value : t;
+                            if (!params.tags) params.tags = [];
+                            params.tags.push(tagId);
+                        });
+                    }
+                    break;
+                case "fechaVencimiento":
+                    if (Array.isArray(filter.value)) {
+
+                        if (filter.value.length > 0) {
+                            params.dueDateStart = filter.value[0];
+                            params.dueDateEnd = filter.value[filter.value.length - 1];
+                        }
+                    }
+                    break;
+                case "search":
+                    params.search = filter.value;
+                    break;
+                default:
+                    params[filter.field] = filter.value;
+                    break;
             }
         });
+
 
         if (sorters?.length) {
             params.ordenar = sorters[0].field;
             params.direccion = sorters[0].order;
         }
 
-        const response = await axiosInstance.get(`/${resource}`, { params });
+        const queryParams = { ...params };
+        if (params.tags) {
+            delete queryParams.tags;
+        }
 
+        const queryString = params.tags
+            ? params.tags.map((t: string) => `tags=${t}`).join("&")
+            : "";
+
+        const response = await axiosInstance.get(`/${resource}?${queryString}`, {
+            params: queryParams,
+        });
 
 
         return {
-            data: response.data.items,
-            total: response.data.total,
+            data: response.data.items ?? response.data,
+            total: response.data.total ?? response.data?.length ?? 0,
         };
     },
 };
 
 export const dataProvider = customDataProvider;
-

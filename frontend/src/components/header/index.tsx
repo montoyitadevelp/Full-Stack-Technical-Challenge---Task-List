@@ -71,6 +71,16 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = () => {
                 label: "Tareas",
                 icon: <BankOutlined />,
               },
+              {
+                key: "categorias",
+                label: "Categorias",
+                icon: <BankOutlined />,
+              },
+              {
+                key: "etiquetas",
+                label: "Etiquetas",
+                icon: <BankOutlined />,
+              },
             ]}
           />
         </Flex>

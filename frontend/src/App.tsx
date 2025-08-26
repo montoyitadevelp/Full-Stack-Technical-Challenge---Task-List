@@ -20,13 +20,15 @@ import {
   TasksPageList,
   TasksPageCreate,
   TasksPageEdit,
-} from "@/pages/tasks";
-
+} from "@/pages/task";
+import { CategoryPageCreate, CategoryPageEdit, CategoryPageList } from "@/pages/category";
+import { LabelPageCreate, LabelPageList } from "@/pages/label";
 import { dataProvider } from "@/providers/data-provider";
 import { authProvider } from "@/providers/auth-provider";
 import { ConfigProvider } from "@/providers/config-provider";
 import "@refinedev/antd/dist/reset.css";
 import "./styles/custom.css";
+
 
 const App: React.FC = () => {
   return (
@@ -44,6 +46,17 @@ const App: React.FC = () => {
                   list: "/tareas",
                   create: "/tareas/create",
                   edit: "/tareas/edit/:id",
+                },
+                {
+                  name: "categorias",
+                  list: "/categorias",
+                  create: "/categorias/create",
+                  edit: "/categorias/edit/:id",
+                },
+                {
+                  name: "etiquetas",
+                  list: "/etiquetas",
+                  create: "/etiquetas/create",
                 }
 
               ]}
@@ -95,7 +108,36 @@ const App: React.FC = () => {
                     path="/tareas/edit/:id"
                     element={<TasksPageEdit />}
                   />
+                  <Route
+                    path="/categorias"
+                    element={
+                      <CategoryPageList>
+                        <Outlet />
+                      </CategoryPageList>
+                    }
+                  >
+                    <Route index element={null} />
+                    <Route path="create" element={<CategoryPageCreate />} />
+                  </Route>
+
+                  <Route
+                    path="/categorias/edit/:id"
+                    element={<CategoryPageEdit />}
+                  />
+
+                  <Route
+                    path="/etiquetas"
+                    element={
+                      <LabelPageList>
+                        <Outlet />
+                      </LabelPageList>
+                    }
+                  >
+                    <Route index element={null} />
+                    <Route path="create" element={<LabelPageCreate />} />
+                  </Route>
                   <Route path="*" element={<ErrorComponent />} />
+
                 </Route>
 
                 <Route
