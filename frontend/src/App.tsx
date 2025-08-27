@@ -1,4 +1,4 @@
-import {Refine } from "@refinedev/core";
+import { Refine } from "@refinedev/core";
 import {
   useNotificationProvider,
 } from "@refinedev/antd";
@@ -16,6 +16,7 @@ import { resources } from "./utils/resources";
 import { GeneralRoutes } from "./utils/routes";
 import "@refinedev/antd/dist/reset.css";
 import "./styles/custom.css";
+import { AuthProvider } from "./context/AuthProvider";
 
 
 const App: React.FC = () => {
@@ -36,9 +37,11 @@ const App: React.FC = () => {
                 breadcrumb: false,
               }}
             >
-              <GeneralRoutes />
-              <UnsavedChangesNotifier />
-              <DocumentTitleHandler />
+              <AuthProvider>
+                <GeneralRoutes />
+                <UnsavedChangesNotifier />
+                <DocumentTitleHandler />
+              </AuthProvider>
             </Refine>
           </AntdApp>
         </ConfigProvider>

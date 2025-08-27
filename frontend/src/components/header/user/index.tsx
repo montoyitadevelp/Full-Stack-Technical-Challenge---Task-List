@@ -2,13 +2,11 @@ import { useGetIdentity, useLogout } from "@refinedev/core";
 import { Avatar, Button, Dropdown, Flex, Skeleton, Typography } from "antd";
 import type { User as UserType } from "@/types";
 import { useStyles } from "./styled";
+import { useAuth } from "@/context/AuthProvider";
 
 export const User = () => {
   const { styles } = useStyles();
-
-  const { mutate: logout } = useLogout();
-  const { data: user, isLoading } = useGetIdentity<UserType>();
-
+  const { logout, user, isLoading } = useAuth()
 
 
   return (
