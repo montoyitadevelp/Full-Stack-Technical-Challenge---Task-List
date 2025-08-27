@@ -22,6 +22,9 @@ El **patrón Repository** separa la lógica de acceso a datos de la lógica de n
 - Cada entidad (Usuario, Tarea, Categoría, Etiqueta) tiene su **repository** que maneja operaciones CRUD y consultas específicas.  
 - Esto permite cambiar la fuente de datos (PostgreSQL, otra base o mockup) sin afectar la lógica de negocio.
 
+## Flujo UML
+<img width="987" height="723" alt="image" src="https://github.com/user-attachments/assets/e52a76d6-46fb-4f88-a919-25b7471011c7" />
+
 ---
 
 ## 🗂️ Estructura del backend
@@ -257,6 +260,7 @@ npm run dev
 ```
 
 El frontend estará corriendo en: [http://localhost:5173](http://localhost:5173)
+
 
 
 
