@@ -123,12 +123,17 @@ FRONTEND_URL="http://localhost:5173"
 
 ## 5️⃣ Crear y migrar la base de datos
 
-Para aplicar las migraciones:
+Para crear las tablas iniciales y aplicar las migraciones al esquema de la base de datos
 
 ```bash
-npx prisma migrate deploy
+npx prisma migrate dev
 ```
 
+Si ya tienes una base de datos con el mismo nombre y presentas problemas corre:
+
+```bash
+npx prisma migrate reset
+```
 Esto aplica todas las migraciones pendientes.
 
 ---
@@ -151,7 +156,7 @@ Esto insertará usuarios, categorías, etiquetas y tareas de prueba.
 
 **Modo desarrollo (hot reload):**
 ```bash
-npm dev
+npm run dev
 ```
 
 ## 8️⃣ Acceder a documentación de la API
@@ -160,6 +165,20 @@ Accede a la documentacion de Swagger en: [http://localhost:3000/api/v1/docs](htt
 
 
 Aquí podrás ver todos los endpoints y probarlos directamente desde el navegador.
+
+Usuarios de prueba 1:
+
+```bash
+    email: "juan@example.com",
+    password: "string",
+```
+
+Usuarios de prueba 2:
+
+```bash
+    email: "maria@example.com",
+    password: "string",
+```
 
 ---
 
@@ -170,8 +189,6 @@ Para inspeccionar la base de datos de forma visual:
 ```bash
 npx prisma studio
 ```
-
-
 
 
 # 🛠 Configuración del Frontend (Local)
