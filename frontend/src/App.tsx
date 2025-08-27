@@ -14,9 +14,9 @@ import { authProvider } from "@/providers/auth-provider";
 import { ConfigProvider } from "@/providers/config-provider";
 import { resources } from "./utils/resources";
 import { GeneralRoutes } from "./utils/routes";
+import { AuthProvider } from "./context/AuthProvider";
 import "@refinedev/antd/dist/reset.css";
 import "./styles/custom.css";
-import { AuthProvider } from "./context/AuthProvider";
 
 
 const App: React.FC = () => {

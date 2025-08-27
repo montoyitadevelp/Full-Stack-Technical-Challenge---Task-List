@@ -7,7 +7,9 @@ type LabelTableProps = {
 
 export const LabelTable = ({ tableProps }: LabelTableProps) => {
     return (
-        <Table {...tableProps} rowKey="id" scroll={{ x: 600 }}>
+        <Table {...tableProps} rowKey="id" scroll={{ x: 600 }} 
+        
+        >
             <Table.Column
                 title="Nombre"
                 dataIndex="nombre"

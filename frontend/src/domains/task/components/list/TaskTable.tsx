@@ -12,6 +12,7 @@ import {
     TaskColumnDueDate,
     TaskColumnPriority
 } from "@/domains/task/components/list";
+import { PRIORITIES, STATUS_COMPLETED } from "../../constants/main";
 
 export const TaskTable = ({ tableProps, categoriaSelectProps, etiquetasSelectProps }: any) => {
     const { RangePicker } = DatePicker;
@@ -29,6 +30,19 @@ export const TaskTable = ({ tableProps, categoriaSelectProps, etiquetasSelectPro
                 dataIndex="completada"
                 key="completada"
                 sorter
+                filterDropdown={(props) => (
+                    <FilterDropdown {...props}>
+                        <Select
+                            placeholder="Filtrar por completada"
+                            style={{ width: 180 }}
+                            options={STATUS_COMPLETED}
+                            value={props.selectedKeys || []}
+                            onChange={(value) => props.setSelectedKeys(value || [])}
+                            allowClear
+                            onClear={() => { props.setSelectedKeys([]); props.confirm(); }}
+                        />
+                    </FilterDropdown>
+                )}
                 render={(value: boolean, record: Task) => <TaskColumnCompleted value={value} record={record} />}
             />
 
@@ -107,11 +121,7 @@ export const TaskTable = ({ tableProps, categoriaSelectProps, etiquetasSelectPro
                         <Select
                             placeholder="Filtrar por prioridad"
                             style={{ width: 180 }}
-                            options={[
-                                { label: "Alta", value: "high" },
-                                { label: "Media", value: "medium" },
-                                { label: "Baja", value: "low" },
-                            ]}
+                            options={PRIORITIES}
                             value={props.selectedKeys || []}
                             onChange={(value) => props.setSelectedKeys(value || [])}
                             allowClear

@@ -22,7 +22,7 @@ export const customDataProvider: DataProvider = {
 
             switch (filter.field) {
                 case "completada":
-                    params.completed = filter.value;
+                    params.completed = filter.value === "Si"
                     break;
                 case "categoriaId":
                     params.category = filter.value;

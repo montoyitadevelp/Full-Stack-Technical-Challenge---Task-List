@@ -48,7 +48,7 @@ export const TaskFormFields = () => {
                 <Select {...etiquetaSelectProps} mode="multiple" placeholder="Selecionar etiquetas" />
             </Form.Item>
 
-            <Form.Item name="completada" label="Completedado" valuePropName="checked">
+            <Form.Item name="completada" label="Completado" valuePropName="checked">
                 <Switch />
             </Form.Item>
         </Flex>
