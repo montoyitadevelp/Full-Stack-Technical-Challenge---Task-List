@@ -1,45 +1,5 @@
-/*
-  Warnings:
-
-  - You are about to drop the `Categoria` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Etiqueta` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Tarea` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `TareaEtiqueta` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Usuario` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropForeignKey
-ALTER TABLE "public"."Categoria" DROP CONSTRAINT "Categoria_usuarioId_fkey";
-
--- DropForeignKey
-ALTER TABLE "public"."Etiqueta" DROP CONSTRAINT "Etiqueta_usuarioId_fkey";
-
--- DropForeignKey
-ALTER TABLE "public"."Tarea" DROP CONSTRAINT "Tarea_categoriaId_fkey";
-
--- DropForeignKey
-ALTER TABLE "public"."Tarea" DROP CONSTRAINT "Tarea_usuarioId_fkey";
-
--- DropForeignKey
-ALTER TABLE "public"."TareaEtiqueta" DROP CONSTRAINT "TareaEtiqueta_etiquetaId_fkey";
-
--- DropForeignKey
-ALTER TABLE "public"."TareaEtiqueta" DROP CONSTRAINT "TareaEtiqueta_tareaId_fkey";
-
--- DropTable
-DROP TABLE "public"."Categoria";
-
--- DropTable
-DROP TABLE "public"."Etiqueta";
-
--- DropTable
-DROP TABLE "public"."Tarea";
-
--- DropTable
-DROP TABLE "public"."TareaEtiqueta";
-
--- DropTable
-DROP TABLE "public"."Usuario";
+-- CreateEnum
+CREATE TYPE "public"."TaskPriority" AS ENUM ('low', 'medium', 'high');
 
 -- CreateTable
 CREATE TABLE "public"."usuario" (
